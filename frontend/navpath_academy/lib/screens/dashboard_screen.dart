@@ -5,6 +5,8 @@ import '../models/models.dart';
 import '../widgets/course_card.dart';
 import '../widgets/stat_card.dart';
 import 'course_detail_screen.dart';
+import 'notifications_screen.dart';
+import 'account_settings_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -23,13 +25,23 @@ class DashboardScreen extends StatelessWidget {
                 style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.white)),
             actions: [
               IconButton(icon: const Icon(Icons.search, color: Colors.white), onPressed: () {}),
-              IconButton(icon: const Icon(Icons.notifications_outlined, color: Colors.white), onPressed: () {}),
+              IconButton(
+                icon: const Icon(Icons.notifications_outlined, color: Colors.white), 
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationsScreen()));
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: CircleAvatar(
-                  radius: 16,
-                  backgroundColor: AppColors.thumbnailBg1,
-                  child: Text('AS', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const AccountSettingsScreen()));
+                  },
+                  child: CircleAvatar(
+                    radius: 16,
+                    backgroundColor: AppColors.thumbnailBg1,
+                    child: Text('AS', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                  ),
                 ),
               ),
             ],

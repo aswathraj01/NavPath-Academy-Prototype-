@@ -39,6 +39,13 @@ class AppTheme {
         surface: AppColors.surface,
       ),
       scaffoldBackgroundColor: AppColors.background,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       textTheme: GoogleFonts.interTextTheme().copyWith(
         displayLarge: GoogleFonts.inter(
           fontSize: 28, fontWeight: FontWeight.w700, color: AppColors.textPrimary,

@@ -72,6 +72,25 @@ class StudyMaterial {
   });
 }
 
+class AppNotification {
+  final String id;
+  final String title;
+  final String message;
+  final String time;
+  final bool isRead;
+  final String type; // 'alert', 'message', 'update'
+
+  const AppNotification({
+    required this.id,
+    required this.title,
+    required this.message,
+    required this.time,
+    this.isRead = false,
+    this.type = 'update',
+  });
+}
+
+
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
 final List<Course> sampleCourses = [
@@ -215,3 +234,39 @@ final List<StudyMaterial> sampleMaterials = [
   StudyMaterial(icon: 'pdf', name: 'Unit 2 formula sheet.pdf', size: '641KB', date: '1 week ago'),
   StudyMaterial(icon: 'pdf', name: 'Practice problems Set 5.pdf', size: '890KB', date: '1 week ago'),
 ];
+
+final List<AppNotification> sampleNotifications = [
+  AppNotification(
+    id: '1',
+    title: 'New Mock Test Available',
+    message: 'IMU CET Full Mock Test 12 is now available. Take it now to check your preparation.',
+    time: '2 hours ago',
+    isRead: false,
+    type: 'alert',
+  ),
+  AppNotification(
+    id: '2',
+    title: 'Lesson Unlocked',
+    message: 'Ship Stability lesson is now unlocked in your IMU CET Foundation course.',
+    time: '5 hours ago',
+    isRead: false,
+    type: 'update',
+  ),
+  AppNotification(
+    id: '3',
+    title: 'Daily Streak Maintained! 🔥',
+    message: 'You have maintained your 4-day streak. Keep it up!',
+    time: '1 day ago',
+    isRead: true,
+    type: 'message',
+  ),
+  AppNotification(
+    id: '4',
+    title: 'Live Doubt Clearing Session',
+    message: 'Join the live doubt clearing session for Physics at 6 PM today.',
+    time: '1 day ago',
+    isRead: true,
+    type: 'alert',
+  ),
+];
+

@@ -53,7 +53,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             CircleAvatar(
               radius: 44,
               backgroundColor: AppColors.thumbnailBg1,
-              child: Text('AM',
+              child: Text('AS',
                   style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700, color: AppColors.primary)),
             ),
             const SizedBox(height: 8),

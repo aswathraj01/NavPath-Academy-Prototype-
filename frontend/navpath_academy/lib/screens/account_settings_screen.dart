@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import 'edit_profile_screen.dart';
+import 'notifications_screen.dart';
+import 'placeholder_screen.dart';
+import 'login_screen.dart';
+import 'notifications_screen.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
   const AccountSettingsScreen({super.key});
@@ -29,13 +33,18 @@ class AccountSettingsScreen extends StatelessWidget {
             title: Text('Account Settings',
                 style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
             actions: [
-              IconButton(icon: const Icon(Icons.notifications_outlined, color: Colors.white), onPressed: () {}),
+              IconButton(
+                icon: const Icon(Icons.notifications_outlined, color: Colors.white), 
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationsScreen()));
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: CircleAvatar(
                   radius: 16,
                   backgroundColor: AppColors.thumbnailBg1,
-                  child: Text('AM', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                  child: Text('AS', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary)),
                 ),
               ),
             ],
@@ -67,7 +76,7 @@ class AccountSettingsScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 26,
                           backgroundColor: AppColors.thumbnailBg1,
-                          child: Text('AM', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                          child: Text('AS', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.primary)),
                         ),
                         const SizedBox(width: 14),
                         Expanded(
@@ -105,7 +114,9 @@ class AccountSettingsScreen extends StatelessWidget {
                         return Column(
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PlaceholderScreen(title: e.value.title)));
+                              },
                               borderRadius: BorderRadius.circular(14),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -162,7 +173,10 @@ class AccountSettingsScreen extends StatelessWidget {
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).popUntil((r) => r.isFirst);
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (_) => const LoginScreen()),
+                              (route) => false,
+                            );
                           },
                           child: Row(
                             children: [
