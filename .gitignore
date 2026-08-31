@@ -39,6 +39,3 @@ ASO_Documentation.md
 App_Store_Content.md
 NavPath_Academy_Technical_Documentation.md
 NavPath_Academy_Web_Technical_Documentation.md
-
-# PDF conversion script — internal tool only
-convert_to_pdf.py
