@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NavPath Academy{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navpath: {
+                            blue: '#06234a',
+                            lightBlue: '#0a2e61',
+                            accent: '#1769e8',
+                            bg: '#f4f8fe',
+                            textDark: '#13213b',
+                            textGray: '#667085'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-navpath-bg font-sans min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white h-[72px] flex items-center justify-between px-8 shadow-sm">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="flex items-center gap-3">
+            <img src="{% static 'Navpath_Final_Logo_lyst1774330667080-removebg-preview.png' %}" alt="NavPath Academy Logo" class="h-10">
+            <div class="flex flex-col">
+                <span class="font-bold text-[11px] text-navpath-blue tracking-wider leading-none">NAVPATH</span>
+                <span class="font-semibold text-[8px] text-navpath-textGray tracking-widest mt-0.5 leading-none">ACADEMY</span>
+            </div>
+        </a>
+
+        <!-- Links -->
+        <nav class="hidden md:flex items-center gap-8 ml-12">
+            <a href="{% url 'home' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Home</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Dashboard</a>
+            <a href="{% url 'courses:my_courses' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">My Courses</a>
+            <a href="{% url 'courses:list' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Browse Courses</a>
+            {% else %}
+            <a href="{% url 'courses:list' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Courses</a>
+            <a href="{% url 'courses:categories' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Categories</a>
+            <a href="{% url 'about' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">About Us</a>
+            {% endif %}
+            <a href="{% url 'public_support' %}" class="font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">Support</a>
+        </nav>
+
+        <!-- Auth Actions -->
+        <div class="flex items-center gap-4 relative">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-2 font-semibold text-sm text-navpath-textDark hover:text-navpath-accent transition-colors">
+                <div class="w-8 h-8 bg-navpath-blue rounded-full flex items-center justify-center text-white text-sm font-bold">
+                    {{ request.user.first_name|first|upper|default:request.user.username|first|upper }}
+                </div>
+                <span class="hidden sm:inline">{{ request.user.first_name|default:request.user.username }}</span>
+            </a>
+            <a href="{% url 'logout' %}" class="font-semibold text-xs text-gray-500 hover:text-red-500 ml-2">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="font-semibold text-[13px] text-navpath-blue px-4 py-2 hover:bg-gray-50 rounded transition-colors">Login</a>
+            <a href="{% url 'register' %}" class="w-[76px] h-10 bg-navpath-accent flex items-center justify-center rounded font-semibold text-[13px] text-white hover:bg-blue-700 transition-colors">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Simple Footer for now -->
+    <footer class="bg-navpath-blue text-white py-8 mt-12">
+        <div class="container mx-auto px-8 text-center text-sm opacity-70">
+            &copy; 2026 NavPath Academy. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

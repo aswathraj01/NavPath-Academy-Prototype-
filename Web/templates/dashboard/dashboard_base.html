@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard - NavPath Academy{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navpath: {
+                            blue: '#06234a',
+                            accent: '#1769e8',
+                            light: '#f4f8fe',
+                            textDark: '#13213b',
+                            textGray: '#667085'
+                        }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-navpath-light min-h-screen font-sans text-navpath-textDark">
+
+<div class="flex min-h-screen w-full">
+
+    <!-- Sidebar -->
+    <aside class="hidden md:flex flex-col w-[250px] bg-navpath-blue min-h-screen flex-shrink-0">
+        <!-- Logo -->
+        <div class="h-[72px] flex items-center px-6 border-b border-[#123a6b]">
+            <a href="{% url 'home' %}" class="flex items-center gap-2">
+                <img src="{% static 'Navpath_Final_Logo_lyst1774330667080-removebg-preview.png' %}" alt="NavPath Academy Logo" class="h-10">
+                <div class="flex flex-col">
+                    <span class="font-bold text-white text-xs leading-none">NAVPATH</span>
+                    <span class="font-semibold text-[#cfe0f7] text-[9px] leading-none tracking-widest mt-[2px]">ACADEMY</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 py-6 px-4 space-y-1">
+            {% with ap=active_page %}
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'dashboard' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'dashboard' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-home"></i></span>
+                <span class="{% if ap == 'dashboard' %}font-semibold{% else %}font-normal{% endif %} text-sm">Dashboard</span>
+            </a>
+            <a href="{% url 'courses:my_courses' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'my_courses' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'my_courses' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-book-open"></i></span>
+                <span class="{% if ap == 'my_courses' %}font-semibold{% else %}font-normal{% endif %} text-sm">My Courses</span>
+            </a>
+            <a href="{% url 'live_classes' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'live_classes' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'live_classes' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-video"></i></span>
+                <span class="{% if ap == 'live_classes' %}font-semibold{% else %}font-normal{% endif %} text-sm">Live Classes</span>
+            </a>
+            <a href="{% url 'courses:study_materials' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'study_materials' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'study_materials' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-file-alt"></i></span>
+                <span class="{% if ap == 'study_materials' %}font-semibold{% else %}font-normal{% endif %} text-sm">Study Materials</span>
+            </a>
+            <a href="{% url 'courses:mock_tests' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'mock_tests' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'mock_tests' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-clipboard-check"></i></span>
+                <span class="{% if ap == 'mock_tests' %}font-semibold{% else %}font-normal{% endif %} text-sm">Mock Tests</span>
+            </a>
+            <a href="{% url 'progress' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'progress' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'progress' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-chart-line"></i></span>
+                <span class="{% if ap == 'progress' %}font-semibold{% else %}font-normal{% endif %} text-sm">Progress</span>
+            </a>
+            <a href="{% url 'messages' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'messages' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'messages' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-envelope"></i></span>
+                <span class="{% if ap == 'messages' %}font-semibold{% else %}font-normal{% endif %} text-sm">Messages</span>
+            </a>
+            <a href="{% url 'notifications' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'notifications' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'notifications' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-bell"></i></span>
+                <span class="{% if ap == 'notifications' %}font-semibold{% else %}font-normal{% endif %} text-sm">Notifications</span>
+            </a>
+            <a href="{% url 'settings' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'settings' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'settings' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-cog"></i></span>
+                <span class="{% if ap == 'settings' %}font-semibold{% else %}font-normal{% endif %} text-sm">Settings</span>
+            </a>
+            <a href="{% url 'support' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'support' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'support' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-question-circle"></i></span>
+                <span class="{% if ap == 'support' %}font-semibold{% else %}font-normal{% endif %} text-sm">Support</span>
+            </a>
+            {% endwith %}
+        </nav>
+
+        <div class="p-4 mt-auto">
+            <a href="{% url 'calendar' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors {% if ap == 'calendar' %}bg-[#123a6b] text-white{% else %}text-[#d2e0f2] hover:bg-[#123a6b] hover:text-white{% endif %}">
+                <span class="text-lg w-5 text-center {% if ap != 'calendar' %}text-[#b9cbe2]{% endif %}"><i class="fas fa-calendar-alt"></i></span>
+                <span class="{% if ap == 'calendar' %}font-semibold{% else %}font-normal{% endif %} text-sm">Calendar</span>
+            </a>
+            <a href="{% url 'logout' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#d2e0f2] hover:bg-red-900 hover:text-white transition-colors">
+                <span class="text-lg w-5 text-center text-[#b9cbe2]"><i class="fas fa-sign-out-alt"></i></span>
+                <span class="font-normal text-sm">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0">
+        <!-- Topbar -->
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 border-b border-gray-100 shrink-0 sticky top-0 z-10">
+            <button class="md:hidden text-navpath-blue">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="flex-1"></div>
+
+            <!-- Django messages -->
+            {% if messages %}
+            <div class="mr-4">
+                {% for message in messages %}
+                <span class="text-sm px-3 py-1 rounded-full {% if message.tags == 'success' %}bg-green-100 text-green-700{% elif message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                    {{ message }}
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'profile' %}" class="flex items-center gap-4 cursor-pointer hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors">
+                <div class="flex flex-col text-right">
+                    <span class="font-bold text-sm text-navpath-textDark">{{ request.user.get_full_name|default:request.user.username }}</span>
+                    <span class="text-xs text-navpath-textGray">Student</span>
+                </div>
+                <div class="w-10 h-10 bg-[#eaf2fc] rounded-full flex items-center justify-center text-navpath-blue font-bold text-lg">
+                    {{ request.user.first_name|first|upper|default:request.user.username|first|upper }}
+                </div>
+            </a>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-1 p-8 overflow-y-auto">
+            {% block dashboard_content %}{% endblock %}
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
