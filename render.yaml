@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: navpath-academy
+    runtime: python
+    rootDir: Web
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate --noinput
+    startCommand: gunicorn navpath_web.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        sync: false          # Set this in the Render dashboard (generate a strong key)
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        sync: false          # Set this in the Render dashboard (your Supabase postgresql:// URL)
+      - key: ALLOWED_HOSTS
+        sync: false          # Set to your Render URL, e.g. navpath-academy.onrender.com
+      - key: PYTHON_VERSION
+        value: "3.12.0"

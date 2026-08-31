@@ -1,0 +1,16 @@
+# NavPath Academy — Python dependencies
+# Core framework
+Django==5.2.17
+
+# WSGI server for production
+gunicorn==23.0.0
+
+# Environment variable management (used in settings.py via import environ)
+django-environ==0.11.2
+
+# PostgreSQL driver — required for Supabase (DATABASE_URL=postgresql://...)
+# Use psycopg2-binary for easy installation; swap for psycopg2 on managed servers
+psycopg2-binary==2.9.10
+
+# Static file serving in production (replaces the need for a CDN or nginx for statics)
+whitenoise==6.8.2
