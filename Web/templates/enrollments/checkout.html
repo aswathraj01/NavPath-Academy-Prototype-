@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - NavPath Academy{% endblock %}
+
+{% block content %}
+<div class="bg-navpath-blue text-white py-12">
+    <div class="container mx-auto px-8 max-w-[1000px]">
+        <h1 class="text-3xl font-bold mb-2">Checkout</h1>
+    </div>
+</div>
+
+<div class="container mx-auto px-8 py-12 max-w-[1000px]">
+    <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Billing Details Form -->
+        <div class="flex-grow bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold text-navpath-textDark mb-6">Billing details</h2>
+            <form class="space-y-6">
+                <div>
+                    <label class="block font-semibold text-sm text-navpath-textDark mb-2">Full name</label>
+                    <input type="text" placeholder="Enter full name" class="w-full h-11 px-4 border border-gray-200 rounded-lg text-sm text-navpath-textDark focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent">
+                </div>
+                <div>
+                    <label class="block font-semibold text-sm text-navpath-textDark mb-2">Email address</label>
+                    <input type="email" placeholder="Enter email address" class="w-full h-11 px-4 border border-gray-200 rounded-lg text-sm text-navpath-textDark focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent">
+                </div>
+                <div>
+                    <label class="block font-semibold text-sm text-navpath-textDark mb-2">Phone number</label>
+                    <input type="tel" placeholder="Enter phone number" class="w-full h-11 px-4 border border-gray-200 rounded-lg text-sm text-navpath-textDark focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent">
+                </div>
+                <div>
+                    <label class="block font-semibold text-sm text-navpath-textDark mb-2">Billing address</label>
+                    <input type="text" placeholder="Enter billing address" class="w-full h-11 px-4 border border-gray-200 rounded-lg text-sm text-navpath-textDark focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent">
+                </div>
+            </form>
+        </div>
+
+        <!-- Order Summary & Selected Course -->
+        <div class="w-full lg:w-[400px] flex-shrink-0 flex flex-col gap-6">
+            <!-- Selected Course Card -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="font-semibold text-navpath-textDark mb-1">Your selected course</h3>
+                <p class="text-xs text-gray-500 mb-4">IMU CET 2027 Complete Preparation</p>
+                <div class="flex gap-4">
+                    <div class="w-24 h-20 bg-[#0a2e61] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="text-3xl text-white">⚓</span>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="font-bold text-sm text-navpath-textDark">12 Months Access</span>
+                        <span class="text-xs text-gray-500">120 lessons • 25 tests • study materials</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Card -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="font-bold text-lg text-navpath-textDark mb-6">Order Summary</h3>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm text-gray-600">Course price</span>
+                    <span class="font-bold text-sm text-navpath-textDark line-through">₹8,999</span>
+                </div>
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-sm text-gray-600">Discount</span>
+                    <span class="font-bold text-sm text-[#1baa63]">- ₹8,999 (100% OFF)</span>
+                </div>
+                
+                <div class="w-full h-px bg-gray-200 mb-6"></div>
+                
+                <div class="flex justify-between items-center mb-8">
+                    <span class="font-bold text-lg text-navpath-textDark">Total</span>
+                    <span class="font-bold text-xl text-navpath-blue">Free</span>
+                </div>
+                
+                <form method="POST" action="{% url 'enroll_action' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="course_id" value="1">
+                    <button type="submit" class="w-full py-3 bg-navpath-accent text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">Confirm Free Enrollment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

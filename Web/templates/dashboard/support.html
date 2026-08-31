@@ -1,0 +1,199 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Help & Support - NavPath Academy{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-navpath-textDark mb-1">Help & Support</h1>
+    <p class="text-sm text-navpath-textGray">How can we help you today?</p>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="mb-4 px-4 py-3 rounded-lg {% if message.tags == 'success' %}bg-green-50 text-green-700 border border-green-200{% else %}bg-red-50 text-red-700 border border-red-200{% endif %} text-sm font-medium">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Left: FAQ + Contact -->
+    <div class="lg:col-span-2 space-y-6">
+
+        <!-- FAQ Accordion -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="font-bold text-lg text-navpath-textDark mb-5">Frequently Asked Questions</h2>
+            <div class="space-y-2" id="faq-container">
+                {% for faq in faqs %}
+                <div class="border border-gray-100 rounded-xl overflow-hidden">
+                    <button onclick="toggleFaq({{ forloop.counter0 }})"
+                        class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors focus:outline-none">
+                        <span class="font-semibold text-sm text-navpath-textDark">{{ faq.question }}</span>
+                        <i class="fas fa-chevron-down text-navpath-textGray text-xs transition-transform duration-200" id="faq-icon-{{ forloop.counter0 }}"></i>
+                    </button>
+                    <div class="px-5 pb-4 text-sm text-navpath-textGray leading-relaxed hidden" id="faq-body-{{ forloop.counter0 }}">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Contact Us -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="font-bold text-lg text-navpath-textDark mb-5">Contact Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="mailto:support@navpathacademy.com" class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-navpath-accent hover:bg-blue-50 transition-all">
+                    <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-navpath-accent">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-sm text-navpath-textDark">Email Support</div>
+                        <div class="text-xs text-navpath-textGray">support@navpathacademy.com</div>
+                    </div>
+                </a>
+                <a href="tel:+919876543210" class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-navpath-accent hover:bg-blue-50 transition-all">
+                    <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-500">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-sm text-navpath-textDark">Call Us</div>
+                        <div class="text-xs text-navpath-textGray">+91 98765 43210</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Raise a Ticket -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="font-bold text-lg text-navpath-textDark mb-5">Raise a Support Ticket</h2>
+            <form method="POST" action="{% url 'raise_ticket' %}">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-navpath-textDark mb-2">Title</label>
+                        <input type="text" name="title" placeholder="Brief description of your issue"
+                            class="w-full h-11 px-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-navpath-textDark mb-2">Description</label>
+                        <textarea name="description" rows="4" placeholder="Describe your issue in detail..."
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-navpath-accent focus:ring-1 focus:ring-navpath-accent resize-none" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-navpath-accent text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+                        Submit Ticket
+                    </button>
+                </div>
+            </form>
+
+            {% if tickets %}
+            <div class="mt-6 pt-6 border-t border-gray-100">
+                <h3 class="font-semibold text-sm text-navpath-textDark mb-3">Your Tickets</h3>
+                <div class="space-y-2">
+                    {% for ticket in tickets %}
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="text-sm font-medium text-navpath-textDark">{{ ticket.title }}</div>
+                            <div class="text-xs text-navpath-textGray">{{ ticket.created_at|date:"d M Y" }}</div>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded-full font-semibold
+                            {% if ticket.status == 'open' %}bg-blue-100 text-blue-700
+                            {% elif ticket.status == 'resolved' %}bg-green-100 text-green-700
+                            {% else %}bg-gray-100 text-gray-600{% endif %}">
+                            {{ ticket.get_status_display }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Right: Live Chat -->
+    <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col overflow-hidden sticky top-8 h-[500px] max-h-[calc(100vh-120px)]">
+            <div class="p-4 border-b border-gray-100 flex items-center gap-3 bg-navpath-blue text-white rounded-t-xl">
+                <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-headset text-sm"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-sm">NavPath Support</div>
+                    <div class="text-[10px] text-blue-200 flex items-center gap-1">
+                        <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+                        Online
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 space-y-3 overflow-y-auto" id="chat-messages">
+                <div class="flex gap-2">
+                    <div class="w-7 h-7 bg-navpath-blue rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">N</div>
+                    <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 max-w-[80%]">
+                        <p class="text-xs text-navpath-textDark">Hello! How can I help you today?</p>
+                        <span class="text-[10px] text-navpath-textGray">Just now</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-2">
+                    <input type="text" id="chat-input" placeholder="Type a message..."
+                        class="flex-1 h-10 px-4 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-navpath-accent">
+                    <button onclick="sendChatMessage()" class="w-10 h-10 bg-navpath-accent text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors flex-shrink-0">
+                        <i class="fas fa-paper-plane text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFaq(index) {
+    const body = document.getElementById('faq-body-' + index);
+    const icon = document.getElementById('faq-icon-' + index);
+    body.classList.toggle('hidden');
+    icon.style.transform = body.classList.contains('hidden') ? '' : 'rotate(180deg)';
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const chatBox = document.getElementById('chat-messages');
+    // User message
+    chatBox.innerHTML += `
+        <div class="flex gap-2 justify-end">
+            <div class="bg-navpath-accent text-white rounded-2xl rounded-tr-none px-4 py-2 max-w-[80%]">
+                <p class="text-xs">${msg}</p>
+                <span class="text-[10px] text-blue-200">Just now</span>
+            </div>
+        </div>`;
+
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Auto reply
+    setTimeout(() => {
+        chatBox.innerHTML += `
+            <div class="flex gap-2">
+                <div class="w-7 h-7 bg-navpath-blue rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">N</div>
+                <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 max-w-[80%]">
+                    <p class="text-xs text-navpath-textDark">Thanks for reaching out! A support agent will respond shortly. For urgent help, call +91 98765 43210.</p>
+                    <span class="text-[10px] text-navpath-textGray">Just now</span>
+                </div>
+            </div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 1000);
+}
+
+document.getElementById('chat-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+});
+</script>
+{% endblock %}

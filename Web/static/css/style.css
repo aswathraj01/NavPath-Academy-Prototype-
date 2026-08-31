@@ -1,0 +1,254 @@
+/* CSS Variables matching Flutter AppTheme */
+:root {
+  --color-primary: #0A2463;
+  --color-accent: #1E3FBF;
+  --color-button-primary: #1C3EAA;
+  --color-background: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-hint: #9CA3AF;
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-divider: #E5E7EB;
+  --color-chip-bg: #EFF6FF;
+  --color-chip-selected: #1E3FBF;
+  --color-card-border: #DDE3F0;
+  --color-thumbnail-bg1: #BFDBFE;
+  --color-thumbnail-bg2: #93C5FD;
+  --color-thumbnail-bg3: #60A5FA;
+  --color-star: #F59E0B;
+  --font-family-sans: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-divider);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar .nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar .logo {
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+.navbar .nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.navbar .nav-links a {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+.navbar .nav-links a:hover {
+  color: var(--color-primary);
+}
+.navbar .nav-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.card-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: white;
+  border: none;
+}
+.card-gradient h2, .card-gradient p {
+  color: white;
+}
+
+.btn {
+  background-color: var(--color-button-primary);
+  color: white;
+  border: 1px solid var(--color-button-primary);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  transition: all 0.2s;
+}
+.btn:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-button-primary);
+  border: 1px solid var(--color-button-primary);
+}
+.btn-outline:hover {
+  background-color: rgba(28, 62, 170, 0.05);
+  color: var(--color-button-primary);
+}
+.btn-white {
+  background-color: white;
+  color: var(--color-primary);
+  border-color: white;
+}
+.btn-white:hover {
+  background-color: #f8f9fa;
+}
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* Footer */
+footer {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 60px 0 20px 0;
+}
+footer .footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+footer .footer-logo {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+footer p {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  line-height: 1.6;
+}
+footer h4 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+footer ul li {
+  margin-bottom: 12px;
+}
+footer ul li a {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+footer ul li a:hover {
+  color: white;
+}
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Grid System */
+.grid {
+  display: grid;
+  gap: 24px;
+}
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+  .grid-cols-3,
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 { grid-template-columns: 1fr; }
+}
+
+/* Custom Elements based on Flutter app */
+.stat-card {
+  background: white;
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.category-tile {
+  background-color: #EEF2FF;
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.category-tile .icon {
+  font-size: 24px;
+}
+.category-tile .info h3 {
+  font-size: 14px;
+  margin: 0;
+}
+.category-tile .info p {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}

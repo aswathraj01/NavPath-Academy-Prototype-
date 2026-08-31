@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Help & Support - NavPath Academy{% endblock %}
+
+{% block content %}
+<div class="bg-navpath-blue text-white py-16">
+    <div class="container mx-auto px-8 max-w-[1280px] text-center">
+        <h1 class="text-4xl font-bold mb-4">Help & Support</h1>
+        <p class="text-blue-200 max-w-xl mx-auto">Find answers, contact us, or raise a support ticket. We're here to help.</p>
+        <!-- Search -->
+        <div class="mt-8 max-w-lg mx-auto">
+            <div class="relative">
+                <input type="text" id="faq-search" placeholder="Search for answers..."
+                    class="w-full h-12 pl-12 pr-4 rounded-xl text-navpath-textDark text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-8 py-16 max-w-[1280px]">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+        <!-- FAQ + Contact Left -->
+        <div class="lg:col-span-2 space-y-8">
+
+            <!-- FAQ -->
+            <div>
+                <h2 class="text-2xl font-bold text-navpath-textDark mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-3" id="faq-list">
+                    {% for faq in faqs %}
+                    <div class="bg-white border border-gray-100 rounded-xl overflow-hidden faq-item" data-question="{{ faq.question|lower }}">
+                        <button onclick="toggleFaq({{ forloop.counter0 }})"
+                            class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors focus:outline-none">
+                            <span class="font-semibold text-navpath-textDark">{{ faq.question }}</span>
+                            <i class="fas fa-chevron-down text-navpath-textGray text-sm transition-transform duration-200" id="faq-icon-{{ forloop.counter0 }}"></i>
+                        </button>
+                        <div class="px-6 pb-5 text-sm text-navpath-textGray leading-relaxed hidden" id="faq-body-{{ forloop.counter0 }}">
+                            {{ faq.answer }}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-navpath-textGray">No FAQs available yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h2 class="text-2xl font-bold text-navpath-textDark mb-6">Contact Us</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <a href="mailto:support@navpathacademy.com" class="bg-white border border-gray-100 rounded-xl p-6 flex items-center gap-4 hover:border-navpath-accent hover:shadow-sm transition-all">
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-navpath-accent text-xl flex-shrink-0">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-navpath-textDark">Email Support</div>
+                            <div class="text-sm text-navpath-textGray">support@navpathacademy.com</div>
+                        </div>
+                    </a>
+                    <a href="tel:+919876543210" class="bg-white border border-gray-100 rounded-xl p-6 flex items-center gap-4 hover:border-navpath-accent hover:shadow-sm transition-all">
+                        <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-500 text-xl flex-shrink-0">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-navpath-textDark">Call Us</div>
+                            <div class="text-sm text-navpath-textGray">+91 98765 43210</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Chat -->
+        <div>
+            <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm sticky top-8" style="height:520px; display:flex; flex-direction:column;">
+                <div class="p-4 bg-navpath-blue text-white flex items-center gap-3">
+                    <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm">NavPath Support</div>
+                        <div class="text-[10px] text-blue-200 flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>Online
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 p-4 overflow-y-auto space-y-3" id="chat-messages">
+                    <div class="flex gap-2">
+                        <div class="w-7 h-7 bg-navpath-blue rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">N</div>
+                        <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2">
+                            <p class="text-xs text-navpath-textDark">Hello! How can I help you today? You can also <a href="{% url 'login' %}" class="text-navpath-accent underline">log in</a> for full support.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-100">
+                    <div class="flex items-center gap-2">
+                        <input id="chat-input" type="text" placeholder="Type a message..."
+                            class="flex-1 h-10 px-4 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-navpath-accent">
+                        <button onclick="sendMsg()" class="w-10 h-10 bg-navpath-accent text-white rounded-full flex items-center justify-center hover:bg-blue-700 flex-shrink-0">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFaq(i) {
+    const b = document.getElementById('faq-body-' + i);
+    const icon = document.getElementById('faq-icon-' + i);
+    b.classList.toggle('hidden');
+    icon.style.transform = b.classList.contains('hidden') ? '' : 'rotate(180deg)';
+}
+
+document.getElementById('faq-search').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.style.display = item.dataset.question.includes(q) ? '' : 'none';
+    });
+});
+
+function sendMsg() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+    const box = document.getElementById('chat-messages');
+    box.innerHTML += `<div class="flex justify-end"><div class="bg-navpath-accent text-white rounded-2xl rounded-tr-none px-4 py-2 max-w-[80%]"><p class="text-xs">${msg}</p></div></div>`;
+    input.value = '';
+    box.scrollTop = box.scrollHeight;
+    setTimeout(() => {
+        box.innerHTML += `<div class="flex gap-2"><div class="w-7 h-7 bg-navpath-blue rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">N</div><div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2"><p class="text-xs text-navpath-textDark">Thank you! For account-related queries, please <a href="{% url 'login' %}" class="text-navpath-accent underline">log in</a> to raise a support ticket.</p></div></div>`;
+        box.scrollTop = box.scrollHeight;
+    }, 900);
+}
+document.getElementById('chat-input').addEventListener('keypress', e => { if (e.key === 'Enter') sendMsg(); });
+</script>
+{% endblock %}

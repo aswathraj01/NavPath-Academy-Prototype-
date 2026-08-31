@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Course Categories - NavPath Academy{% endblock %}
+
+{% block content %}
+<div class="bg-navpath-blue text-white py-12">
+    <div class="container mx-auto px-8">
+        <h1 class="text-3xl font-bold mb-2">Course Categories</h1>
+        <p class="text-navpath-textGray text-sm">Choose a category to find the right course for you.</p>
+    </div>
+</div>
+
+<div class="container mx-auto px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1280px] mx-auto">
+        
+        {% for category in categories %}
+        <!-- Category Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center p-12 hover:shadow-md hover:-translate-y-1 transition-all">
+            <span class="font-normal text-[60px] text-[#0a2e61] mb-4">{{ category.icon }}</span>
+            <span class="font-bold text-lg text-navpath-textDark mb-2 text-center">{{ category.name }}</span>
+            <span class="font-normal text-sm text-navpath-textGray mb-6 text-center">{{ category.course_count }} Courses</span>
+            <a href="{% url 'courses:list' %}?category={{ category.slug }}" class="w-[120px] h-10 bg-[#eaf2fc] flex items-center justify-center rounded font-semibold text-sm text-navpath-accent hover:bg-blue-100 transition-colors">Explore</a>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

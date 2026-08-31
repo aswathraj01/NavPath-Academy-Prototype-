@@ -1,0 +1,20 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Calendar - NavPath Academy{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-navpath-textDark mb-2">Calendar</h1>
+    <p class="text-navpath-textGray text-sm">Keep track of your study schedule, exams, and live classes.</p>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-center min-h-[400px]">
+    <div class="text-center">
+        <div class="w-16 h-16 bg-blue-50 text-navpath-blue rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="far fa-calendar-alt"></i>
+        </div>
+        <h3 class="font-bold text-lg text-navpath-textDark mb-2">No Upcoming Events</h3>
+        <p class="text-navpath-textGray text-sm max-w-sm mx-auto">Your calendar is currently empty. Upcoming live classes, mock tests, and exams will appear here.</p>
+    </div>
+</div>
+{% endblock %}

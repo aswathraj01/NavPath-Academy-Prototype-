@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - NavPath Academy{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="bg-navpath-blue text-white py-20">
+    <div class="container mx-auto px-8 max-w-[1280px] text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">About NavPath Academy</h1>
+        <p class="text-blue-200 text-lg max-w-2xl mx-auto">India's premier online platform for Merchant Navy entrance exam preparation, trusted by thousands of aspiring seafarers.</p>
+    </div>
+</div>
+
+<!-- Mission -->
+<div class="container mx-auto px-8 py-16 max-w-[1280px]">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+        <div>
+            <h2 class="text-3xl font-bold text-navpath-textDark mb-4">Navigating Futures. Transforming Lives.</h2>
+            <p class="text-navpath-textGray leading-relaxed mb-4">NavPath Academy was founded by experienced sailing officers to guide aspiring mariners through their journey to the Merchant Navy. Our academy is a premier online platform for Merchant Navy entrance exam preparation.</p>
+            <p class="text-navpath-textGray leading-relaxed">Led by Capt. Robin C George, a Master Mariner with more than three decades of distinguished service in the global shipping industry, we provide captain-led guidance, weekly tests, doubt clearing, and sponsorship interview prep.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="bg-navpath-light rounded-2xl p-6 text-center">
+                <div class="text-3xl font-bold text-navpath-accent mb-1">10,000+</div>
+                <div class="text-sm text-navpath-textGray">Students Enrolled</div>
+            </div>
+            <div class="bg-navpath-light rounded-2xl p-6 text-center">
+                <div class="text-3xl font-bold text-navpath-accent mb-1">24</div>
+                <div class="text-sm text-navpath-textGray">Courses Available</div>
+            </div>
+            <div class="bg-navpath-light rounded-2xl p-6 text-center">
+                <div class="text-3xl font-bold text-navpath-accent mb-1">95%</div>
+                <div class="text-sm text-navpath-textGray">Success Rate</div>
+            </div>
+            <div class="bg-navpath-light rounded-2xl p-6 text-center">
+                <div class="text-3xl font-bold text-navpath-accent mb-1">50+</div>
+                <div class="text-sm text-navpath-textGray">Expert Instructors</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team -->
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-navpath-textDark mb-4">Our Expert Instructors</h2>
+        <p class="text-navpath-textGray max-w-xl mx-auto">Learn from the best — certified Master Mariners and senior maritime educators with decades of experience.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {% for instructor in instructors %}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center hover:shadow-md transition-shadow">
+            <div class="w-20 h-20 bg-navpath-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                {{ instructor.initials }}
+            </div>
+            <h3 class="font-bold text-navpath-textDark mb-1">{{ instructor.name }}</h3>
+            <p class="text-navpath-accent text-sm font-semibold mb-3">{{ instructor.title }}</p>
+            <p class="text-xs text-navpath-textGray leading-relaxed">{{ instructor.bio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Values -->
+    <div class="bg-navpath-blue rounded-3xl p-12 text-white text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">Why Choose NavPath?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <div>
+                <div class="text-4xl mb-3">🎓</div>
+                <h3 class="font-bold text-lg mb-2">Expert Faculty</h3>
+                <p class="text-blue-200 text-sm">Taught by certified Master Mariners and industry veterans with 15+ years of experience.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-3">📱</div>
+                <h3 class="font-bold text-lg mb-2">Learn Anywhere</h3>
+                <p class="text-blue-200 text-sm">Access all courses on web and mobile. Download materials for offline studying.</p>
+            </div>
+            <div>
+                <div class="text-4xl mb-3">✅</div>
+                <h3 class="font-bold text-lg mb-2">Proven Results</h3>
+                <p class="text-blue-200 text-sm">95% of our students successfully clear their target exams within 2 attempts.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+        <h2 class="text-2xl font-bold text-navpath-textDark mb-4">Ready to Start Your Maritime Journey?</h2>
+        <div class="flex gap-4 justify-center">
+            <a href="{% url 'courses:list' %}" class="px-8 py-3 bg-navpath-accent text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+                Browse Courses
+            </a>
+            <a href="{% url 'register' %}" class="px-8 py-3 border border-navpath-blue text-navpath-blue font-bold rounded-lg hover:bg-navpath-light transition-colors">
+                Sign Up Free
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

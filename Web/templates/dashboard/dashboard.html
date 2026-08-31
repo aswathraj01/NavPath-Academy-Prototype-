@@ -1,0 +1,137 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - NavPath Academy{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-navpath-textDark mb-1">
+        Welcome back, {{ request.user.first_name|default:request.user.username }}! 👋
+    </h1>
+    <p class="text-sm text-navpath-textGray">Here's your learning overview.</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs text-navpath-textGray font-semibold uppercase tracking-wide">Enrolled</span>
+            <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                <i class="fas fa-book text-navpath-accent text-sm"></i>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-navpath-textDark">{{ enrollments.count }}</div>
+        <div class="text-xs text-navpath-textGray mt-1">courses enrolled</div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs text-navpath-textGray font-semibold uppercase tracking-wide">Lessons Done</span>
+            <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
+                <i class="fas fa-check-circle text-green-500 text-sm"></i>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-navpath-textDark">{{ total_lessons_completed }}</div>
+        <div class="text-xs text-navpath-textGray mt-1">lessons completed</div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs text-navpath-textGray font-semibold uppercase tracking-wide">Tests Taken</span>
+            <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
+                <i class="fas fa-clipboard-check text-purple-500 text-sm"></i>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-navpath-textDark">{{ total_tests }}</div>
+        <div class="text-xs text-navpath-textGray mt-1">mock tests attempted</div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs text-navpath-textGray font-semibold uppercase tracking-wide">Avg Score</span>
+            <div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center">
+                <i class="fas fa-star text-yellow-400 text-sm"></i>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-navpath-textDark">{{ avg_score }}%</div>
+        <div class="text-xs text-navpath-textGray mt-1">average test score</div>
+    </div>
+</div>
+
+<!-- Overall Progress -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+    <div class="flex items-center justify-between mb-3">
+        <h3 class="font-bold text-navpath-textDark">Overall Progress</h3>
+        <span class="text-sm font-bold text-navpath-accent">{{ overall_progress }}%</span>
+    </div>
+    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-navpath-accent to-blue-400 rounded-full transition-all duration-700"
+             style="width: {{ overall_progress }}%"></div>
+    </div>
+    <p class="text-xs text-navpath-textGray mt-2">Across all enrolled courses</p>
+</div>
+
+<!-- Continue Learning + My Courses -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Continue Learning -->
+    <div class="lg:col-span-1 bg-navpath-blue rounded-xl p-6 text-white">
+        <h3 class="font-bold mb-1">Continue Learning</h3>
+        {% if continue_enrollment %}
+            <p class="text-blue-200 text-xs mb-4">{{ continue_enrollment.course.title }}</p>
+            {% if continue_lesson %}
+            <p class="text-sm mb-4 text-blue-100">Next: {{ continue_lesson.title }}</p>
+            {% endif %}
+            <div class="bg-[#123a6b] rounded-lg p-3 mb-4">
+                <div class="flex justify-between text-xs text-blue-200 mb-2">
+                    <span>Progress</span>
+                    <span>{{ continue_enrollment.progress_percentage }}%</span>
+                </div>
+                <div class="h-2 bg-[#1a4d88] rounded-full">
+                    <div class="h-full bg-white rounded-full" style="width: {{ continue_enrollment.progress_percentage }}%"></div>
+                </div>
+            </div>
+            <a href="{% url 'courses:course_player' %}?course={{ continue_enrollment.course.id }}{% if continue_lesson %}&lesson={{ continue_lesson.id }}{% endif %}"
+               class="block w-full py-2 bg-navpath-accent text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                Continue &rarr;
+            </a>
+        {% else %}
+            <p class="text-blue-200 text-xs mb-4">You haven't enrolled in any courses yet.</p>
+            <a href="{% url 'courses:list' %}" class="block w-full py-2 bg-navpath-accent text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                Browse Courses &rarr;
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Enrolled Courses List -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-navpath-textDark">My Courses</h3>
+            <a href="{% url 'courses:my_courses' %}" class="text-xs text-navpath-accent hover:underline">View All</a>
+        </div>
+
+        {% if enrollments %}
+            <div class="space-y-4">
+                {% for enrollment in enrollments|slice:":3" %}
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-navpath-blue rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+                        {{ enrollment.course.thumbnail_icon }}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-semibold text-sm text-navpath-textDark truncate">{{ enrollment.course.title }}</h4>
+                            <span class="text-xs text-navpath-accent font-bold ml-2 flex-shrink-0">{{ enrollment.progress_percentage }}%</span>
+                        </div>
+                        <div class="h-1.5 bg-gray-100 rounded-full mt-2">
+                            <div class="h-full bg-navpath-accent rounded-full" style="width: {{ enrollment.progress_percentage }}%"></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-8">
+                <i class="fas fa-book-open text-gray-200 text-4xl mb-3"></i>
+                <p class="text-sm text-navpath-textGray">No courses yet.</p>
+                <a href="{% url 'courses:list' %}" class="text-navpath-accent text-sm hover:underline mt-1 inline-block">Browse Courses</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

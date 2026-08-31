@@ -1,0 +1,20 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Live Classes - NavPath Academy{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-navpath-textDark mb-2">Live Classes</h1>
+    <p class="text-navpath-textGray text-sm">Join upcoming interactive sessions and webinars with our Master Mariners.</p>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-center min-h-[400px]">
+    <div class="text-center">
+        <div class="w-16 h-16 bg-blue-50 text-navpath-blue rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fas fa-video"></i>
+        </div>
+        <h3 class="font-bold text-lg text-navpath-textDark mb-2">No Live Classes Scheduled</h3>
+        <p class="text-navpath-textGray text-sm max-w-sm mx-auto">There are currently no live classes scheduled for your enrolled courses. Check back later.</p>
+    </div>
+</div>
+{% endblock %}
