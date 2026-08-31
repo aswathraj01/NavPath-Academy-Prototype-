@@ -1,31 +1,89 @@
-# NavPath Academy Prototype
+# NavPath Academy — Developer Evaluation Submission
 
-A Flutter prototype for the NavPath Academy mobile application, designed to help students prepare for the IMU CET and DNS sponsorship exams for the Merchant Navy.
+A full-stack prototype for **NavPath Academy** — India's dedicated IMU CET & Merchant Navy exam preparation platform.
 
-## Overview
-This repository contains the frontend implementation of the NavPath Academy app. It is currently a **prototype**, meaning that it showcases the UI, user flows, animations, and layout using static, mocked data. Real backend integration, database storage, and payment gateways are yet to be implemented.
+This submission covers: **Working Web Prototype** · **Mobile App Prototype** · **Technical Documentation** · **ASO Strategy** · **App Store Content**
 
-## Key Features (Implemented)
-- **Dashboard**: Displays a daily streak, quick stats, and recommended courses.
-- **Course Catalog**: Browse courses and view detailed curriculums.
-- **Mock Tests**: Interactive multiple-choice tests with instant scoring.
-- **Smooth Navigation**: Features native-like sliding page transitions (Cupertino).
-- **Branding**: Custom splash screen and launcher icon.
+---
 
-## Tech Stack
-- **Framework**: Flutter (Dart)
-- **Architecture**: Stateless/Stateful widgets with lightweight `ValueNotifier` state management.
-- **Styling**: `google_fonts` (Inter)
+## Repository Structure
 
-## Getting Started
+```
+NavPath-Academy-Prototype-/
+├── Web/                          # Django web platform (full-stack prototype)
+│   ├── core/                     # Public pages, notifications, support
+│   ├── courses/                  # Course catalog, lessons, mock tests, study materials
+│   ├── enrollments/              # Enrollment logic, checkout
+│   ├── users/                    # Auth, dashboard, profile, settings
+│   └── templates/                # All HTML templates
+│
+├── frontend/navpath_academy/     # Flutter mobile app prototype
+│   └── lib/screens/              # 14 screens covering full student journey
+│
+├── NavPath_Academy_Web_Technical_Documentation.md   # Web platform (Section 8)
+├── NavPath_Academy_Technical_Documentation.md       # Mobile app concept (Sections 3 & 8)
+├── ASO_Documentation.md                             # ASO strategy + app listing fields A–K (Sections 5, 6, 7)
+├── App_Store_Content.md                             # Play Store copy & submission fields
+└── render.yaml                                      # Deployment config (Render)
+```
 
-### Prerequisites
-- Flutter SDK
-- Android Studio / Xcode for emulators
+---
 
-### Running the App
-1. Clone the repository.
-2. Run `flutter pub get` to fetch dependencies.
-3. Run `flutter run` to launch the app on your connected device or emulator.
+## Web Prototype (Django)
 
-*Note: For the full technical documentation, ASO strategy, and App Store content, please see the PDF documents generated in this repository.*
+A **functional full-stack Django web application** connected to a Supabase PostgreSQL database.
+
+**Key Features (all implemented with real DB persistence):**
+- User registration, login, logout (session-based)
+- Course catalog with category filtering & search
+- Course detail with lesson list and enrolment status
+- Enrolment & checkout flow
+- Video lesson player with lesson completion tracking
+- Progress percentage updated in real-time
+- Interactive mock tests with scoring & result history
+- Study materials per course
+- Notifications, Support tickets, Messages, Settings, Profile edit
+- Django Admin panel for full content management
+- `seed_data` management command for fresh-install setup
+
+**To run locally:**
+```bash
+cd Web
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_data   # populates courses, lessons, questions
+python manage.py runserver
+```
+
+**To deploy (Render):** Push to GitHub → Render auto-runs build + migrate via `render.yaml`.
+
+---
+
+## Mobile App Prototype (Flutter)
+
+A **high-fidelity Flutter prototype** demonstrating the full student journey on Android/iOS.
+
+**Screens implemented:**
+Dashboard · Course Catalog · Course Detail · Checkout · My Courses · Video Lesson · Study Materials · Mock Test · Test Results · Notifications · Account Settings · Edit Profile · Login
+
+**To run:**
+```bash
+cd frontend/navpath_academy
+flutter pub get
+flutter run
+```
+
+---
+
+## Documentation
+
+| Document | Coverage |
+|----------|----------|
+| [`NavPath_Academy_Web_Technical_Documentation.md`](NavPath_Academy_Web_Technical_Documentation.md) | Django architecture, models, views, URLs, deployment, testing |
+| [`NavPath_Academy_Technical_Documentation.md`](NavPath_Academy_Technical_Documentation.md) | Flutter prototype + full production mobile app concept (Learnyst, payments, DRM, FCM) |
+| [`ASO_Documentation.md`](ASO_Documentation.md) | Keyword research, competitor analysis, ASO strategy, all listing fields A–K, store graphics |
+| [`App_Store_Content.md`](App_Store_Content.md) | Complete Play Store submission copy (name, tagline, short/long description, all URLs) |
+
+---
+
+*Submission for NavPath Academy Final Developer Evaluation — 31 August 2026*
